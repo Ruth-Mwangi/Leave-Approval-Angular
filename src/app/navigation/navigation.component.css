@@ -1,0 +1,22 @@
+.navbar{
+
+  color: #05386B;
+
+}
+.navbar-brand{
+  color: #05386B;
+}
+
+.nav-link {
+  color: #05386B;
+}
+a:active{
+  color: black;
+}
+
+
+
+.btn{
+  background-color: #05386B;
+  color: white;
+}

@@ -1,0 +1,48 @@
+<!-- <div class="inputs">
+
+        <input type="text" name="search" id="search" placeholder="Search for users " #search required>
+        <button class="btn btn-primary btn-sm" (click)="searchEmployee(search)" [routerLink]="['/users']"  > Search User</button>
+</div> -->
+<header class="header">
+
+  <div class="nav" style="position: absolute;">
+    <app-navigation></app-navigation>
+  </div>
+
+  <div class="container-fluid">
+
+
+
+    <div class=" employee-id  ">
+      <div class="row employeeInput">
+        <div class="col-md-10">
+          <div class="form-group ">
+
+            <input class="form-control" type="text" name="search" id="search" placeholder="Search for users " #search
+              required>
+            <small class="text-danger" *ngIf="emp == null">User Not found</small>
+
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group ">
+
+
+            <button type="submit" class="btn" (click)="searchEmployee(search)">Search</button>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+  <div class="overlay" *ngIf="loading == true">
+    <img src="../../assets/images/loading.gif" alt="">
+  </div>
+
+
+</header>

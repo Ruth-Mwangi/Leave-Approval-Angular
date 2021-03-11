@@ -1,0 +1,226 @@
+<div class="container-fluid">
+  <div class="row" style="height: 10%;">
+    <app-navigation></app-navigation>
+  </div>
+  <div class="row" style="width: 50% ;">
+    <div class="col-md-2  ">
+      <div class="row mt-4 ">
+        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modelId">
+          Apply For Leave
+        </button>
+      </div>
+    </div>
+    <div class="col-md-2">
+    <div class="row mt-4 "><button type="button" name="" id="" class="btn  " (click)="sortRequests(null)">
+        All</button>
+    </div>
+  </div>
+  <div class="col-md-2  ">
+  <div class="row mt-4 "><button type="button" name="" id="" class="btn  " (click)="sortRequests(0)">
+      Pending</button>
+  </div>
+</div>
+<div class="col-md-2  ">
+<div class="row mt-4 "><button type="button" name="" id="" class="btn  " (click)="sortRequests(1)">
+    Approved</button>
+</div>
+</div>
+<div class="col-md-2  ">
+<div class="row mt-4 "><button type="button" name="" id="" class="btn  " (click)="sortRequests(2)">
+    Rejected</button>
+</div>
+
+</div>
+</div>
+<div class="row" style="height: 90%;">
+
+  <div class="col-md-12">
+
+    <h3 *ngIf="employeeRequests === ''"> No Results For The Filter Selected!!</h3>
+    <div class="card-columns" data-masonry='{ "itemSelector": ".card", "columnWidth": 200 }'>
+
+      <div class="card border-dark mb-3" *ngFor="let request of employeeRequests.requests;let i=index">
+        <div class="card-header display-2">
+          <h5>{{employeeRequests.employeeName}}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{employeeRequests.employeeId}}</h5>
+          <p class="card-text">Leave type : {{request.leaveName}}</p>
+          <p class="card-text">Start date : {{request.startDate}}</p>
+          <p class="card-text">End date : {{request.endDate}}</p>
+          <p class="card-text">Requested days : {{request.requestedDays}}</p>
+
+          <p class="card-text"><small class="text-muted" *ngIf="request.status != '0'"> Reviewed on
+              {{request.dateApproved}} &nbsp; &nbsp; Reviewed by {{request.approverName}}</small></p>
+          <p class="card-text"><small class=" text-danger" *ngIf="request.status == '0'"> Pending Approval</small></p>
+        </div>
+        <div class="card-footer" *ngIf="request.status==1">
+          <button type="button" class="btn btn-outline-success" (click)="downloadLeave(request.id)">Download</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Leave Application Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="modal-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="p" role="progressbar"
+              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+
+          <h5>Select Leave Type</h5>
+          <hr>
+          <div class="row justify-content-center pl-5">
+            <div class="form-check form-check-inline mr-auto " *ngFor="let type of leaveTypes; let i=index">
+              <input class="form-check-input" type="radio" value={{type.id}} name="leaveTypeId" #leaveTypeId='ngModel'
+                [(ngModel)]="newRequest.leaveTypeId" data-toggle="tooltip" data-placement="top"
+                title={{type.description}} (click)="checkRemainingLeaveDays(type.id,type.name,type.days)">
+              <label class="form-check-label" for="inlineRadio1">{{type.name}}</label>
+            </div>
+
+          </div>
+          <h5>Employee Details</h5>
+          <hr>
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">First Name</span>
+
+                </div>
+                <input type="text" class="form-control" placeholder="First name" value={{employee.fname}} readonly>
+              </div>
+
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Last Name</span>
+
+                </div>
+                <input type="text" class="form-control" placeholder="Last name" value={{employee.lname}} readonly>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Employee Id</span>
+
+                </div>
+                <input type="text" class="form-control" placeholder="Employee Id" value={{employee.employeeId}}
+                  id="employeeId" name="employeeId">
+              </div>
+
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Address</span>
+
+                </div>
+                <input type="text" class="form-control" placeholder="Address" value={{employee.address}} readonly>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Telephone</span>
+
+                </div>
+                <input type="text" class="form-control" placeholder="Telephone" value={{employee.telephone}} readonly>
+              </div>
+
+            </div>
+            <div class="col">
+
+            </div>
+          </div>
+          <h5>Leave Request Details</h5>
+          <hr>
+          <h6 *ngIf="(leaveSelected !== 'sick' )  ">Remaining Days for the requested leave - {{remainingDays}}</h6>
+          <div class="row">
+            <div class="col">
+              <div class="input-group ">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Start Date</span>
+
+                </div>
+                <input type="date" class="form-control" placeholder="mm/dd/yyy" id="startDate" name="startDate"
+                  #startDate='ngModel' [(ngModel)]="newRequest.startDate">
+              </div>
+
+            </div>
+            <div class="col">
+              <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">End Date</span>
+
+                </div>
+                <input type="date" class="form-control" placeholder="mm/dd/yyy" id="endDate" name="endDate"
+                  #endDate='ngModel' [(ngModel)]="newRequest.endDate">
+              </div>
+
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Days Requesting</span>
+                </div>
+                <input type="number" class="form-control" placeholder="Days Requesting" id="requestedDays"
+                  name="requestedDays" #requestedDays='ngModel' [(ngModel)]="newRequest.requestedDays">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Approver</label>
+                </div>
+                <select class="custom-select" id="approverId" name="approverId" #approverId='ngModel'
+                  [(ngModel)]="newRequest.approverId">
+                  <option selected>Choose...</option>
+                  <option value=1>Patrick Chege</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</div>

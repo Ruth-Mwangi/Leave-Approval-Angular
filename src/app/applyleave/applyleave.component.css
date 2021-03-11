@@ -1,0 +1,59 @@
+.container-fluid
+{
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  background-color: #5CDB95;
+}
+
+app-navigation{
+  width: 100%;
+}
+.btn {
+  background-color: #05386B;
+  color: white;
+  border-radius: 1rem;
+}
+
+.card{
+  border: #05386B 1px solid;
+  border-radius: 1rem;
+}
+.row{
+  margin-bottom: 20px;
+}
+
+/* @media (min-width:356px) {
+  .card-columns {
+    column-count: 1;
+  }
+  .col-md-11{
+    margin-top: 10px;
+  }
+
+}
+
+@media (min-width:576px) {
+  .card-columns {
+    column-count: 1;
+  }
+}
+
+@media (min-width:768px) {
+  .card-columns {
+    column-count: 4;
+  }
+}
+
+@media (min-width:992px) {
+  .card-columns {
+    column-count: 4;
+  }
+}
+
+@media (min-width:1200px) {
+  .card-columns {
+    column-count: 4;
+  }
+} */
+
